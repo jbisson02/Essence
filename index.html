@@ -5,41 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Essence Sherbrooke</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f9; text-align: center; padding: 20px; }
-        .stats-bar { 
-            display: flex; justify-content: space-around; 
-            background: #34495e; color: white; padding: 15px; 
-            border-radius: 10px; margin-bottom: 25px; max-width: 400px; margin-left: auto; margin-right: auto;
+        body { font-family: sans-serif; background: #f4f4f9; text-align: center; padding: 10px; }
+        .stats-container { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            max-width: 500px; margin: 0 auto 25px auto;
         }
-        .stat-item { flex: 1; }
-        .stat-value { font-weight: bold; font-size: 1.2rem; display: block; }
-        .stat-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; }
+        .stat-card { 
+            background: #34495e; color: white; padding: 10px; 
+            border-radius: 8px; font-size: 0.8rem;
+        }
+        .stat-card.min { border-bottom: 4px solid #2ecc71; }
+        .stat-card.max { border-bottom: 4px solid #e74c3c; }
+        .stat-value { font-weight: bold; font-size: 1.4rem; display: block; color: #fff; }
+        .stat-location { display: block; font-size: 0.65rem; opacity: 0.9; margin-top: 5px; line-height: 1.2; }
         
         .container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .card { 
             background: white; padding: 20px; border-radius: 10px; 
-            width: 90%; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-left: 10px solid #007bff;
+            width: 95%; max-width: 450px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 10px solid #007bff; text-align: left;
         }
-        .price { font-size: 2.2rem; color: #27ae60; font-weight: bold; margin: 10px 0; }
+        .price { font-size: 2.2rem; color: #2ecc71; font-weight: bold; margin: 5px 0; }
     </style>
 </head>
 <body>
     <h1>⛽ Essence Sherbrooke</h1>
 
-    <div class="stats-bar">
-        <div class="stat-item">
-            <span class="stat-label">Minimum (QC)</span>
+    <div class="stats-container">
+        <div class="stat-card min">
+            <small>PRIX MIN (QC)</small>
             <span id="min-price" class="stat-value">--</span>
+            <span id="min-loc" class="stat-location">Chargement...</span>
         </div>
-        <div class="stat-item" style="border-left: 1px solid #555;">
-            <span class="stat-label">Maximum (QC)</span>
+        <div class="stat-card max">
+            <small>PRIX MAX (QC)</small>
             <span id="max-price" class="stat-value">--</span>
+            <span id="max-loc" class="stat-location">Chargement...</span>
         </div>
     </div>
     
     <div id="display" class="container">
-        <p>Chargement...</p>
+        <p>Récupération des données...</p>
     </div>
 
     <script>
@@ -48,11 +54,15 @@
                 const res = await fetch('./prix.json?t=' + Date.now());
                 const data = await res.json();
                 
-                // Affichage des stats
-                document.getElementById('min-price').innerText = data.stats.min;
-                document.getElementById('max-price').innerText = data.stats.max;
+                // Stats Min
+                document.getElementById('min-price').innerText = data.stats.min.prix;
+                document.getElementById('min-loc').innerText = `${data.stats.min.nom}\n${data.stats.min.adresse}`;
 
-                // Affichage des stations
+                // Stats Max
+                document.getElementById('max-price').innerText = data.stats.max.prix;
+                document.getElementById('max-loc').innerText = `${data.stats.max.nom}\n${data.stats.max.adresse}`;
+
+                // Stations ciblées
                 let html = "";
                 data.stations.forEach(item => {
                     html += `
@@ -60,13 +70,14 @@
                             <strong>${item.nom}</strong><br>
                             <small>${item.adresse}</small>
                             <div class="price">${item.prix}</div>
+                            <small style="color:#999">Mise à jour: ${item.maj}</small>
                         </div>
                     `;
                 });
                 document.getElementById('display').innerHTML = html;
 
             } catch (error) {
-                document.getElementById('display').innerHTML = "Erreur de chargement des données.";
+                document.getElementById('display').innerHTML = "Erreur de mise à jour.";
             }
         }
 
