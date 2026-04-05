@@ -1,22 +1,20 @@
 {
+    "file_generated_at": "2026-04-05T20:50:07.569297Z",
     "stations": [
         {
             "nom": "Costco - Costco Sherbrooke",
             "adresse": "3800 boul. Monseigneur-Fortier, Sherbrooke",
-            "prix": "179.9¢",
-            "maj": "Récemment"
+            "prix": "179.9¢"
         },
         {
             "nom": "Esso - Couche-Tard Inc.",
             "adresse": "2900 boul. Portland, Sherbrooke",
-            "prix": "196.9¢",
-            "maj": "Récemment"
+            "prix": "196.9¢"
         },
         {
             "nom": "Shell - Dépanneur Carrefour Portland inc.",
             "adresse": "2880 boul. de Portland, Sherbrooke",
-            "prix": "196.9¢",
-            "maj": "Récemment"
+            "prix": "196.9¢"
         }
     ],
     "stats": {
