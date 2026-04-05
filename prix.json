@@ -20,7 +20,15 @@
         }
     ],
     "stats": {
-        "min": "164.2¢",
-        "max": "219.0¢"
+        "min": {
+            "nom": "Miraco - Garage Daniel Gosselin",
+            "adresse": "499 rue Principale, Saint-Sébastien",
+            "prix": "164.2¢"
+        },
+        "max": {
+            "nom": "Esso - Libre Service Fermont inc.",
+            "adresse": "401 rue Le Carrefour, Fermont",
+            "prix": "219.0¢"
+        }
     }
 }
