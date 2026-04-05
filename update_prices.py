@@ -1,4 +1,3 @@
-
 import requests
 import json
 
@@ -12,6 +11,9 @@ def get_data():
         response = requests.get(URL, headers=headers, timeout=30)
         data = response.json()
         
+        # Extraction de la date de génération du fichier (Metadata)
+        file_date = data.get('metadata', {}).get('generated_at', 'Inconnue')
+        
         results = []
         min_station = None
         max_station = None
@@ -23,7 +25,6 @@ def get_data():
         for feature in features:
             props = feature.get('properties', {})
             
-            # Extraction du prix régulier
             current_price = None
             for p in props.get('Prices', []):
                 if p.get('GasType') == 'Régulier' and p.get('IsAvailable'):
@@ -35,44 +36,31 @@ def get_data():
             if current_price is None:
                 continue
 
-            # Mise à jour des stats provinciales (Min/Max)
             if current_price < min_price:
                 min_price = current_price
-                min_station = {
-                    "nom": f"{props.get('brand', '')} - {props.get('Name', '')}",
-                    "adresse": props.get('Address', ''),
-                    "prix": f"{current_price}¢"
-                }
+                min_station = {"nom": f"{props.get('brand', '')} - {props.get('Name', '')}", "adresse": props.get('Address', ''), "prix": f"{current_price}¢"}
             
             if current_price > max_price:
                 max_price = current_price
-                max_station = {
-                    "nom": f"{props.get('brand', '')} - {props.get('Name', '')}",
-                    "adresse": props.get('Address', ''),
-                    "prix": f"{current_price}¢"
-                }
+                max_station = {"nom": f"{props.get('brand', '')} - {props.get('Name', '')}", "adresse": props.get('Address', ''), "prix": f"{current_price}¢"}
 
-            # Filtrage pour vos stations à Sherbrooke
             if props.get('PostalCode') in TARGET_POSTAL_CODES:
                 results.append({
                     "nom": f"{props.get('brand', '')} - {props.get('Name', '')}",
                     "adresse": props.get('Address', ''),
-                    "prix": f"{current_price}¢",
-                    "maj": "Récemment"
+                    "prix": f"{current_price}¢"
                 })
 
         final_data = {
+            "file_generated_at": file_date,
             "stations": results,
-            "stats": {
-                "min": min_station,
-                "max": max_station
-            }
+            "stats": {"min": min_station, "max": max_station}
         }
 
         with open("prix.json", "w", encoding="utf-8") as f:
             json.dump(final_data, f, indent=4, ensure_ascii=False)
             
-        print("Mise à jour réussie.")
+        print(f"Mise à jour réussie. Fichier généré le : {file_date}")
     except Exception as e:
         print(f"Erreur : {e}")
 
