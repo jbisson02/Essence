@@ -6,19 +6,16 @@
     <title>Essence Sherbrooke</title>
     <style>
         body { font-family: sans-serif; background: #f4f4f9; text-align: center; padding: 10px; }
+        .source-date { font-size: 0.8rem; color: #666; margin-bottom: 20px; font-style: italic; }
         .stats-container { 
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
             max-width: 500px; margin: 0 auto 25px auto;
         }
-        .stat-card { 
-            background: #34495e; color: white; padding: 10px; 
-            border-radius: 8px; font-size: 0.8rem;
-        }
+        .stat-card { background: #34495e; color: white; padding: 10px; border-radius: 8px; font-size: 0.8rem; }
         .stat-card.min { border-bottom: 4px solid #2ecc71; }
         .stat-card.max { border-bottom: 4px solid #e74c3c; }
-        .stat-value { font-weight: bold; font-size: 1.4rem; display: block; color: #fff; }
+        .stat-value { font-weight: bold; font-size: 1.4rem; display: block; }
         .stat-location { display: block; font-size: 0.65rem; opacity: 0.9; margin-top: 5px; line-height: 1.2; }
-        
         .container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .card { 
             background: white; padding: 20px; border-radius: 10px; 
@@ -30,17 +27,18 @@
 </head>
 <body>
     <h1>⛽ Essence Sherbrooke</h1>
+    <div id="file-date" class="source-date">Chargement de la date source...</div>
 
     <div class="stats-container">
         <div class="stat-card min">
             <small>PRIX MIN (QC)</small>
             <span id="min-price" class="stat-value">--</span>
-            <span id="min-loc" class="stat-location">Chargement...</span>
+            <span id="min-loc" class="stat-location">...</span>
         </div>
         <div class="stat-card max">
             <small>PRIX MAX (QC)</small>
             <span id="max-price" class="stat-value">--</span>
-            <span id="max-loc" class="stat-location">Chargement...</span>
+            <span id="max-loc" class="stat-location">...</span>
         </div>
     </div>
     
@@ -49,20 +47,27 @@
     </div>
 
     <script>
+        function formatDate(isoString) {
+            if (!isoString || isoString === 'Inconnue') return 'Inconnue';
+            const date = new Date(isoString);
+            return "Données officielles du : " + date.toLocaleString('fr-CA');
+        }
+
         async function loadPrices() {
             try {
                 const res = await fetch('./prix.json?t=' + Date.now());
                 const data = await res.json();
                 
-                // Stats Min
+                // Affichage de la date du fichier
+                document.getElementById('file-date').innerText = formatDate(data.file_generated_at);
+
+                // Stats
                 document.getElementById('min-price').innerText = data.stats.min.prix;
                 document.getElementById('min-loc').innerText = `${data.stats.min.nom}\n${data.stats.min.adresse}`;
-
-                // Stats Max
                 document.getElementById('max-price').innerText = data.stats.max.prix;
                 document.getElementById('max-loc').innerText = `${data.stats.max.nom}\n${data.stats.max.adresse}`;
 
-                // Stations ciblées
+                // Stations
                 let html = "";
                 data.stations.forEach(item => {
                     html += `
@@ -70,7 +75,6 @@
                             <strong>${item.nom}</strong><br>
                             <small>${item.adresse}</small>
                             <div class="price">${item.prix}</div>
-                            <small style="color:#999">Mise à jour: ${item.maj}</small>
                         </div>
                     `;
                 });
