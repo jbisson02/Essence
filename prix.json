@@ -1,74 +1,26 @@
-[
-    {
-        "nom": "Sonic - Accommodation Boisclair inc.",
-        "adresse": "18 rue Ouellet, Saint-Léonard-d'Aston",
-        "prix": "182.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Esso - Couche-Tard Inc.",
-        "adresse": "182 rang Du Moulin-Rouge, Saint-Léonard-d'Aston",
-        "prix": "182.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Esso - 9267-7475 Québec Inc.",
-        "adresse": "510 rte 222, Saint-Denis-de-Brompton",
-        "prix": "187.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Shell - 9386-7257 Québec Inc.",
-        "adresse": "5527 ch. de l'Aéroport, Valcourt (ville & canton)",
-        "prix": "187.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Costco - Costco Sherbrooke",
-        "adresse": "3800 boul. Monseigneur-Fortier, Sherbrooke",
-        "prix": "179.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Esso - Couche-Tard Inc.",
-        "adresse": "2900 boul. Portland, Sherbrooke",
-        "prix": "196.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Shell - Dépanneur Carrefour Portland inc.",
-        "adresse": "2880 boul. de Portland, Sherbrooke",
-        "prix": "196.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Petro-Canada - DÉPANNEUR DU QUARTIER UNIVERSITÉ IN",
-        "adresse": "2027 rte 222, Saint-Denis-de-Brompton",
-        "prix": "196.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Petro-Canada - 9196-9261 QUEBEC INC",
-        "adresse": "120 235 , Ange-Gardien",
-        "prix": "187.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Ultramar - 9493-46189 Quebec INC",
-        "adresse": "126 route 235, ANGE-GARDIEN",
-        "prix": "193.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Couche-Tard - Couche-Tard Inc.",
-        "adresse": "101 rte 235, Ange-Gardien",
-        "prix": "192.9¢",
-        "maj": "Aujourd'hui"
-    },
-    {
-        "nom": "Shell - Les Entreprises 235 inc.",
-        "adresse": "98 rte 235 ouest, Ange-Gardien",
-        "prix": "192.9¢",
-        "maj": "Aujourd'hui"
+{
+    "stations": [
+        {
+            "nom": "Costco - Costco Sherbrooke",
+            "adresse": "3800 boul. Monseigneur-Fortier, Sherbrooke",
+            "prix": "179.9¢",
+            "maj": "Récemment"
+        },
+        {
+            "nom": "Esso - Couche-Tard Inc.",
+            "adresse": "2900 boul. Portland, Sherbrooke",
+            "prix": "196.9¢",
+            "maj": "Récemment"
+        },
+        {
+            "nom": "Shell - Dépanneur Carrefour Portland inc.",
+            "adresse": "2880 boul. de Portland, Sherbrooke",
+            "prix": "196.9¢",
+            "maj": "Récemment"
+        }
+    ],
+    "stats": {
+        "min": "164.2¢",
+        "max": "219.0¢"
     }
-]
+}
