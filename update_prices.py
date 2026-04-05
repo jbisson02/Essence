@@ -1,53 +1,60 @@
+
 import requests
 import json
 
 URL = "https://regieessencequebec.ca/stations.geojson.gz"
-
-# Tes codes postaux cibles
-TARGET_POSTAL_CODES = ["J1L 0C8", "J1L 2A4", "J0B 2P0", "J0E 2L0", "J0E 1E0", "J0C 1M0" ]
+TARGET_POSTAL_CODES = ["J1L 0C8", "J1L 2A4"]
+#TARGET_POSTAL_CODES = ["J1L 0C8", "J1L 2A4", "J0B 2P0", "J0E 2L0", "J0E 1E0", "J0C 1M0" ]
 
 def get_data():
     headers = {'User-Agent': 'Mozilla/5.0'}
-    print("Téléchargement des données...")
-    
     try:
         response = requests.get(URL, headers=headers, timeout=30)
-        response.raise_for_status()
         data = response.json()
         
         results = []
+        all_prices = []
         features = data.get('features', [])
 
         for feature in features:
             props = feature.get('properties', {})
-            cp = props.get('PostalCode', '')
             
-            # On vérifie si le code postal correspond
-            if cp in TARGET_POSTAL_CODES:
-                nom = props.get('Name', 'Station')
-                marque = props.get('brand', '')
-                adresse = props.get('Address', '')
-                
-                # Extraction du prix "Régulier" dans la liste "Prices"
-                prix_regulier = "N/A"
-                prices_list = props.get('Prices', [])
-                for p in prices_list:
-                    if p.get('GasType') == 'Régulier':
-                        prix_regulier = p.get('Price')
-                        break
-                
+            # Extraction du prix régulier pour statistiques
+            prix_val = None
+            for p in props.get('Prices', []):
+                if p.get('GasType') == 'Régulier' and p.get('IsAvailable'):
+                    try:
+                        # On enlève le "¢" et on convertit en nombre
+                        prix_val = float(p.get('Price').replace('¢', ''))
+                        all_prices.append(prix_val)
+                    except:
+                        pass
+            
+            # Filtrage pour tes stations (Sherbrooke)
+            if props.get('PostalCode') in TARGET_POSTAL_CODES:
                 results.append({
-                    "nom": f"{marque} - {nom}",
-                    "adresse": adresse,
-                    "prix": prix_regulier,
-                    "maj": "Aujourd'hui" # Le fichier ne semble pas avoir de date par station
+                    "nom": f"{props.get('brand', '')} - {props.get('Name', '')}",
+                    "adresse": props.get('Address', ''),
+                    "prix": f"{prix_val}¢" if prix_val else "N/A",
+                    "maj": "Récemment"
                 })
 
-        print(f"Succès : {len(results)} stations trouvées.")
-        
+        # Calcul des stats provinciales
+        stats = {
+            "min": f"{min(all_prices)}¢" if all_prices else "N/A",
+            "max": f"{max(all_prices)}¢" if all_prices else "N/A"
+        }
+
+        # On sauvegarde un dictionnaire contenant les deux infos
+        final_data = {
+            "stations": results,
+            "stats": stats
+        }
+
         with open("prix.json", "w", encoding="utf-8") as f:
-            json.dump(results, f, indent=4, ensure_ascii=False)
+            json.dump(final_data, f, indent=4, ensure_ascii=False)
             
+        print("Mise à jour réussie.")
     except Exception as e:
         print(f"Erreur : {e}")
 
