@@ -20,7 +20,7 @@ def get_data():
             props = feature.get('properties', {})
             
             # On récupère le code postal et on enlève les espaces pour comparer
-            raw_pc = str(props.get('code_postal', '')).replace(" ", "").upper()
+            raw_pc = str(props.get('PostalCode', '')).replace(" ", "").upper()
             
             if raw_pc in TARGET_POSTAL_CODES:
                 # Identification simplifiée basée sur le code postal pour l'affichage
