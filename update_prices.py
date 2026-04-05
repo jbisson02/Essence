@@ -13,42 +13,60 @@ def get_data():
         data = response.json()
         
         results = []
-        all_prices = []
+        min_station = None
+        max_station = None
+        min_price = float('inf')
+        max_price = float('-inf')
+
         features = data.get('features', [])
 
         for feature in features:
             props = feature.get('properties', {})
             
-            # Extraction du prix régulier pour statistiques
-            prix_val = None
+            # Extraction du prix régulier
+            current_price = None
             for p in props.get('Prices', []):
                 if p.get('GasType') == 'Régulier' and p.get('IsAvailable'):
                     try:
-                        # On enlève le "¢" et on convertit en nombre
-                        prix_val = float(p.get('Price').replace('¢', ''))
-                        all_prices.append(prix_val)
+                        current_price = float(p.get('Price').replace('¢', ''))
                     except:
-                        pass
+                        continue
             
-            # Filtrage pour tes stations (Sherbrooke)
+            if current_price is None:
+                continue
+
+            # Mise à jour des stats provinciales (Min/Max)
+            if current_price < min_price:
+                min_price = current_price
+                min_station = {
+                    "nom": f"{props.get('brand', '')} - {props.get('Name', '')}",
+                    "adresse": props.get('Address', ''),
+                    "prix": f"{current_price}¢"
+                }
+            
+            if current_price > max_price:
+                max_price = current_price
+                max_station = {
+                    "nom": f"{props.get('brand', '')} - {props.get('Name', '')}",
+                    "adresse": props.get('Address', ''),
+                    "prix": f"{current_price}¢"
+                }
+
+            # Filtrage pour vos stations à Sherbrooke
             if props.get('PostalCode') in TARGET_POSTAL_CODES:
                 results.append({
                     "nom": f"{props.get('brand', '')} - {props.get('Name', '')}",
                     "adresse": props.get('Address', ''),
-                    "prix": f"{prix_val}¢" if prix_val else "N/A",
+                    "prix": f"{current_price}¢",
                     "maj": "Récemment"
                 })
 
-        # Calcul des stats provinciales
-        stats = {
-            "min": f"{min(all_prices)}¢" if all_prices else "N/A",
-            "max": f"{max(all_prices)}¢" if all_prices else "N/A"
-        }
-
-        # On sauvegarde un dictionnaire contenant les deux infos
         final_data = {
             "stations": results,
-            "stats": stats
+            "stats": {
+                "min": min_station,
+                "max": max_station
+            }
         }
 
         with open("prix.json", "w", encoding="utf-8") as f:
