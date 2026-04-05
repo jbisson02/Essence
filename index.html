@@ -5,29 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Essence Sherbrooke</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; text-align: center; padding: 20px; }
-        h1 { color: #1a1a1a; margin-bottom: 30px; }
-        .container { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        body { font-family: sans-serif; background: #f4f4f9; text-align: center; padding: 20px; }
+        .container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .card { 
-            background: white; 
-            padding: 25px; 
-            border-radius: 15px; 
-            width: 90%; 
-            max-width: 400px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border-left: 8px solid #007bff;
+            background: white; padding: 20px; border-radius: 10px; 
+            width: 90%; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 10px solid #ccc;
         }
-        .costco { border-left-color: #e0001a; } /* Rouge Costco */
-        .shell { border-left-color: #ffd500; }  /* Jaune Shell */
-        
-        .brand { font-size: 1.2rem; font-weight: bold; color: #333; margin: 0; }
-        .address { color: #666; font-size: 0.9rem; margin: 5px 0 15px 0; }
-        .price { font-size: 2.5rem; color: #2ecc71; font-weight: 800; margin: 10px 0; }
-        .unit { font-size: 1rem; color: #777; }
-        .update { font-size: 0.75rem; color: #aaa; margin-top: 10px; }
+        .price { font-size: 2.2rem; color: #27ae60; font-weight: bold; margin: 10px 0; }
+        .error { color: red; background: #ffdada; padding: 10px; border-radius: 5px; }
+        .debug { font-size: 0.7rem; color: #999; margin-top: 20px; }
     </style>
 </head>
 <body>
     <h1>⛽ Prix de l'essence</h1>
     
-    <div id="display" class="container
+    <div id="display" class="container">
+        <p>Chargement des données...</p>
+    </div>
+
+    <div id="debug-info" class="debug"></div>
+
+    <script>
+        async function loadPrices() {
+            const display = document.getElementById('display');
+            const debug = document.getElementById('debug-info');
+            
+            try {
+                // Le ?t= force la mise à jour pour éviter le cache
+                const url = './prix.json?t=' + Date.now();
+                const res = await fetch(url);
+                
+                if (!res.ok) throw new Error("Fichier prix.json introuvable (404)");
+                
+                const data = await res.json();
+                debug.innerText = "Dernière vérification : " + new Date().toLocaleTimeString();
+
+                if (!data || data.length === 0) {
+                    display.innerHTML = "<p>Le fichier est vide. Le script Python n'a trouvé aucune station.</p>";
+                    return;
+                }
+
+                let html = "";
+                data.forEach(item => {
+                    // On gère les cas où les données seraient manquantes
+                    const nom = item.nom || "Station inconnue";
+                    const prix = item.prix || "N/A";
+                    const adresse = item.adresse || "";
+
+                    html += `
+                        <div class="card">
+                            <strong>${nom}</strong><br>
+                            <small>${adresse}</small>
+                            <div class="price">${prix}</div>
+                        </div>
+                    `;
+                });
+                display.innerHTML = html;
+
+            } catch (error) {
+                display.innerHTML = `<div class="error">
+                    <b>Erreur de chargement</b><br>
+                    ${error.message}<br>
+                    <small>Vérifiez que le fichier prix.json existe sur votre GitHub.</small>
+                </div>`;
+            }
+        }
+
+        loadPrices();
+        setInterval(loadPrices, 60000); // Tente de rafraîchir chaque minute
+    </script>
+</body>
+</html>
