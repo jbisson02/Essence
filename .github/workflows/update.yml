@@ -1,8 +1,8 @@
 name: Update Fuel Prices
 on:
   schedule:
-    - cron: '*/5 * * * *' # Toutes les 5 minutes
-  workflow_dispatch: # Permet de le lancer manuellement pour tester
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,7 +14,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-code: '3.9'
+          python-version: '3.9' # Correction ici: 'python-version' au lieu de 'python-code'
 
       - name: Install dependencies
         run: pip install requests
