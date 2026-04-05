@@ -3,12 +3,12 @@ import json
 
 URL = "https://regieessencequebec.ca/stations.geojson.gz"
 
-# Liste des codes postaux cibles (sans espaces pour faciliter la comparaison)
-TARGET_POSTAL_CODES = ["J1L0C8", "J1L2A4"]
+# Tes codes postaux cibles
+TARGET_POSTAL_CODES = ["J1L 0C8", "J1L 2A4"]
 
 def get_data():
     headers = {'User-Agent': 'Mozilla/5.0'}
-    print("Téléchargement des données de la Régie...")
+    print("Téléchargement des données...")
     
     try:
         response = requests.get(URL, headers=headers, timeout=30)
@@ -16,34 +16,40 @@ def get_data():
         data = response.json()
         
         results = []
-        for feature in data.get('features', []):
+        features = data.get('features', [])
+
+        for feature in features:
             props = feature.get('properties', {})
+            cp = props.get('PostalCode', '')
             
-            # On récupère le code postal et on enlève les espaces pour comparer
-            raw_pc = str(props.get('PostalCode', '')).replace(" ", "").upper()
-            
-            if raw_pc in TARGET_POSTAL_CODES:
-                # Identification simplifiée basée sur le code postal pour l'affichage
-                nom_station = props.get('nom_station') or props.get('marque') or "Station"
-                adresse = props.get('adresse', '')
+            # On vérifie si le code postal correspond
+            if cp in TARGET_POSTAL_CODES:
+                nom = props.get('Name', 'Station')
+                marque = props.get('brand', '')
+                adresse = props.get('Address', '')
+                
+                # Extraction du prix "Régulier" dans la liste "Prices"
+                prix_regulier = "N/A"
+                prices_list = props.get('Prices', [])
+                for p in prices_list:
+                    if p.get('GasType') == 'Régulier':
+                        prix_regulier = p.get('Price')
+                        break
                 
                 results.append({
-                    "nom": f"{nom_station} ({adresse})",
-                    "prix": props.get('prix_ordinaire') or props.get('prix'),
-                    "maj": props.get('date_maj') or props.get('derniere_maj') or "Récemment",
-                    "cp": props.get('code_postal')
+                    "nom": f"{marque} - {nom}",
+                    "adresse": adresse,
+                    "prix": prix_regulier,
+                    "maj": "Aujourd'hui" # Le fichier ne semble pas avoir de date par station
                 })
-        
-        # Tri du moins cher au plus cher
-        results.sort(key=lambda x: float(x['prix']) if x['prix'] else 999)
 
-        print(f"Succès ! {len(results)} station(s) trouvée(s) pour les codes postaux demandés.")
+        print(f"Succès : {len(results)} stations trouvées.")
         
         with open("prix.json", "w", encoding="utf-8") as f:
             json.dump(results, f, indent=4, ensure_ascii=False)
             
     except Exception as e:
-        print(f"Erreur lors de l'exécution : {e}")
+        print(f"Erreur : {e}")
 
 if __name__ == "__main__":
     get_data()
