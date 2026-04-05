@@ -6,74 +6,72 @@
     <title>Essence Sherbrooke</title>
     <style>
         body { font-family: sans-serif; background: #f4f4f9; text-align: center; padding: 20px; }
+        .stats-bar { 
+            display: flex; justify-content: space-around; 
+            background: #34495e; color: white; padding: 15px; 
+            border-radius: 10px; margin-bottom: 25px; max-width: 400px; margin-left: auto; margin-right: auto;
+        }
+        .stat-item { flex: 1; }
+        .stat-value { font-weight: bold; font-size: 1.2rem; display: block; }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; }
+        
         .container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .card { 
             background: white; padding: 20px; border-radius: 10px; 
             width: 90%; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-left: 10px solid #ccc;
+            border-left: 10px solid #007bff;
         }
         .price { font-size: 2.2rem; color: #27ae60; font-weight: bold; margin: 10px 0; }
-        .error { color: red; background: #ffdada; padding: 10px; border-radius: 5px; }
-        .debug { font-size: 0.7rem; color: #999; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <h1>⛽ Prix de l'essence</h1>
+    <h1>⛽ Essence Sherbrooke</h1>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-label">Minimum (QC)</span>
+            <span id="min-price" class="stat-value">--</span>
+        </div>
+        <div class="stat-item" style="border-left: 1px solid #555;">
+            <span class="stat-label">Maximum (QC)</span>
+            <span id="max-price" class="stat-value">--</span>
+        </div>
+    </div>
     
     <div id="display" class="container">
-        <p>Chargement des données...</p>
+        <p>Chargement...</p>
     </div>
-
-    <div id="debug-info" class="debug"></div>
 
     <script>
         async function loadPrices() {
-            const display = document.getElementById('display');
-            const debug = document.getElementById('debug-info');
-            
             try {
-                // Le ?t= force la mise à jour pour éviter le cache
-                const url = './prix.json?t=' + Date.now();
-                const res = await fetch(url);
-                
-                if (!res.ok) throw new Error("Fichier prix.json introuvable (404)");
-                
+                const res = await fetch('./prix.json?t=' + Date.now());
                 const data = await res.json();
-                debug.innerText = "Dernière vérification : " + new Date().toLocaleTimeString();
+                
+                // Affichage des stats
+                document.getElementById('min-price').innerText = data.stats.min;
+                document.getElementById('max-price').innerText = data.stats.max;
 
-                if (!data || data.length === 0) {
-                    display.innerHTML = "<p>Le fichier est vide. Le script Python n'a trouvé aucune station.</p>";
-                    return;
-                }
-
+                // Affichage des stations
                 let html = "";
-                data.forEach(item => {
-                    // On gère les cas où les données seraient manquantes
-                    const nom = item.nom || "Station inconnue";
-                    const prix = item.prix || "N/A";
-                    const adresse = item.adresse || "";
-
+                data.stations.forEach(item => {
                     html += `
                         <div class="card">
-                            <strong>${nom}</strong><br>
-                            <small>${adresse}</small>
-                            <div class="price">${prix}</div>
+                            <strong>${item.nom}</strong><br>
+                            <small>${item.adresse}</small>
+                            <div class="price">${item.prix}</div>
                         </div>
                     `;
                 });
-                display.innerHTML = html;
+                document.getElementById('display').innerHTML = html;
 
             } catch (error) {
-                display.innerHTML = `<div class="error">
-                    <b>Erreur de chargement</b><br>
-                    ${error.message}<br>
-                    <small>Vérifiez que le fichier prix.json existe sur votre GitHub.</small>
-                </div>`;
+                document.getElementById('display').innerHTML = "Erreur de chargement des données.";
             }
         }
 
         loadPrices();
-        setInterval(loadPrices, 60000); // Tente de rafraîchir chaque minute
+        setInterval(loadPrices, 300000);
     </script>
 </body>
 </html>
