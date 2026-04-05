@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Essence Sherbrooke</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background: #eee; }
+        .card { background: white; margin: 10px auto; padding: 20px; border-radius: 8px; max-width: 300px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .price { font-size: 2em; color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Prix Actuels</h1>
+    <div id="display">Chargement...</div>
+
+    <script>
+        async function loadPrices() {
+            const res = await fetch('prix.json');
+            const data = await res.json();
+            let html = "";
+            data.forEach(item => {
+                html += `<div class="card">
+                            <h3>${item.nom}</h3>
+                            <div class="price">${item.prix}¢</div>
+                            <small>MàJ: ${item.maj}</small>
+                         </div>`;
+            });
+            document.getElementById('display').innerHTML = html;
+        }
+        loadPrices();
+        setInterval(loadPrices, 60000); // Rafraîchit l'affichage toutes les minutes
+    </script>
+</body>
+</html>
