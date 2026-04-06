@@ -1,6 +1,37 @@
 {
-    "file_generated_at": "2026-04-06T00:10:07.2678761Z",
+    "file_generated_at": "2026-04-06T00:15:07.5212113Z",
     "villes": {
+        "Saint-Léonard-d'Aston": [
+            {
+                "nom": "Sonic - Accommodation Boisclair inc.",
+                "adresse": "18 rue Ouellet, Saint-Léonard-d'Aston",
+                "prix": "182.9¢"
+            },
+            {
+                "nom": "Esso - Couche-Tard Inc.",
+                "adresse": "182 rang Du Moulin-Rouge, Saint-Léonard-d'Aston",
+                "prix": "182.9¢"
+            }
+        ],
+        "Saint-Denis-de-Brompton": [
+            {
+                "nom": "Esso - 9267-7475 Québec Inc.",
+                "adresse": "510 rte 222, Saint-Denis-de-Brompton",
+                "prix": "187.9¢"
+            },
+            {
+                "nom": "Petro-Canada - DÉPANNEUR DU QUARTIER UNIVERSITÉ IN",
+                "adresse": "2027 rte 222, Saint-Denis-de-Brompton",
+                "prix": "196.9¢"
+            }
+        ],
+        "Valcourt (ville & canton)": [
+            {
+                "nom": "Shell - 9386-7257 Québec Inc.",
+                "adresse": "5527 ch. de l'Aéroport, Valcourt (ville & canton)",
+                "prix": "187.9¢"
+            }
+        ],
         "Sherbrooke": [
             {
                 "nom": "Costco - Costco Sherbrooke",
@@ -16,6 +47,30 @@
                 "nom": "Shell - Dépanneur Carrefour Portland inc.",
                 "adresse": "2880 boul. de Portland, Sherbrooke",
                 "prix": "196.9¢"
+            }
+        ],
+        "Ange-Gardien": [
+            {
+                "nom": "Petro-Canada - 9196-9261 QUEBEC INC",
+                "adresse": "120 235 , Ange-Gardien",
+                "prix": "187.9¢"
+            },
+            {
+                "nom": "Couche-Tard - Couche-Tard Inc.",
+                "adresse": "101 rte 235, Ange-Gardien",
+                "prix": "192.9¢"
+            },
+            {
+                "nom": "Shell - Les Entreprises 235 inc.",
+                "adresse": "98 rte 235 ouest, Ange-Gardien",
+                "prix": "192.9¢"
+            }
+        ],
+        "ANGE-GARDIEN": [
+            {
+                "nom": "Ultramar - 9493-46189 Quebec INC",
+                "adresse": "126 route 235, ANGE-GARDIEN",
+                "prix": "193.9¢"
             }
         ]
     },
