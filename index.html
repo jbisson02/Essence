@@ -3,88 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Essence Sherbrooke</title>
+    <title>Essence par Ville</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f9; text-align: center; padding: 10px; }
-        .source-date { font-size: 0.8rem; color: #666; margin-bottom: 20px; font-style: italic; }
-        .stats-container { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-            max-width: 500px; margin: 0 auto 25px auto;
+        body { font-family: sans-serif; background: #f4f4f9; padding: 10px; }
+        .city-section { margin-top: 30px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .city-title { 
+            background: #2c3e50; color: white; padding: 10px; 
+            border-radius: 5px; font-size: 1.2rem; margin-bottom: 15px;
         }
-        .stat-card { background: #34495e; color: white; padding: 10px; border-radius: 8px; font-size: 0.8rem; }
-        .stat-card.min { border-bottom: 4px solid #2ecc71; }
-        .stat-card.max { border-bottom: 4px solid #e74c3c; }
-        .stat-value { font-weight: bold; font-size: 1.4rem; display: block; }
-        .stat-location { display: block; font-size: 0.65rem; opacity: 0.9; margin-top: 5px; line-height: 1.2; }
-        .container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .stats-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 500px; margin: 0 auto 20px auto; }
+        .stat-card { background: #34495e; color: white; padding: 10px; border-radius: 8px; font-size: 0.75rem; text-align: center; }
         .card { 
-            background: white; padding: 20px; border-radius: 10px; 
-            width: 95%; max-width: 450px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-left: 10px solid #007bff; text-align: left;
+            background: white; padding: 15px; border-radius: 8px; 
+            margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 8px solid #007bff;
         }
-        .price { font-size: 2.2rem; color: #2ecc71; font-weight: bold; margin: 5px 0; }
+        .price { font-size: 1.8rem; color: #2ecc71; font-weight: bold; float: right; }
+        .clear { clear: both; }
     </style>
 </head>
 <body>
-    <h1>⛽ Essence Sherbrooke</h1>
-    <div id="file-date" class="source-date">Chargement de la date source...</div>
+    <h1>⛽ Prix par Ville</h1>
+    <div id="file-date" style="font-size: 0.8rem; margin-bottom: 20px;">Chargement...</div>
 
-    <div class="stats-container">
-        <div class="stat-card min">
-            <small>PRIX MIN (QC)</small>
-            <span id="min-price" class="stat-value">--</span>
-            <span id="min-loc" class="stat-location">...</span>
-        </div>
-        <div class="stat-card max">
-            <small>PRIX MAX (QC)</small>
-            <span id="max-price" class="stat-value">--</span>
-            <span id="max-loc" class="stat-location">...</span>
-        </div>
-    </div>
-    
-    <div id="display" class="container">
-        <p>Récupération des données...</p>
-    </div>
+    <div class="stats-container" id="stats-area"></div>
+    <div id="display"></div>
 
     <script>
-        function formatDate(isoString) {
-            if (!isoString || isoString === 'Inconnue') return 'Inconnue';
-            const date = new Date(isoString);
-            return "Données officielles du : " + date.toLocaleString('fr-CA');
-        }
-
         async function loadPrices() {
             try {
                 const res = await fetch('./prix.json?t=' + Date.now());
                 const data = await res.json();
                 
-                // Affichage de la date du fichier
-                document.getElementById('file-date').innerText = formatDate(data.file_generated_at);
+                document.getElementById('file-date').innerText = "Données du : " + new Date(data.file_generated_at).toLocaleString('fr-CA');
 
-                // Stats
-                document.getElementById('min-price').innerText = data.stats.min.prix;
-                document.getElementById('min-loc').innerText = `${data.stats.min.nom}\n${data.stats.min.adresse}`;
-                document.getElementById('max-price').innerText = data.stats.max.prix;
-                document.getElementById('max-loc').innerText = `${data.stats.max.nom}\n${data.stats.max.adresse}`;
+                // Affichage Stats
+                document.getElementById('stats-area').innerHTML = `
+                    <div class="stat-card"><b>MIN QC</b><br>${data.stats.min.prix}<br><small>${data.stats.min.nom}</small></div>
+                    <div class="stat-card"><b>MAX QC</b><br>${data.stats.max.prix}<br><small>${data.stats.max.nom}</small></div>
+                `;
 
-                // Stations
+                // Affichage par Ville
                 let html = "";
-                data.stations.forEach(item => {
-                    html += `
-                        <div class="card">
-                            <strong>${item.nom}</strong><br>
-                            <small>${item.adresse}</small>
-                            <div class="price">${item.prix}</div>
-                        </div>
-                    `;
-                });
+                for (const ville in data.villes) {
+                    html += `<div class="city-section">
+                                <div class="city-title">${ville}</div>`;
+                    
+                    data.villes[ville].forEach(item => {
+                        html += `
+                            <div class="card">
+                                <span class="price">${item.prix}</span>
+                                <strong>${item.nom}</strong><br>
+                                <small>${item.adresse}</small>
+                                <div class="clear"></div>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                }
                 document.getElementById('display').innerHTML = html;
 
             } catch (error) {
-                document.getElementById('display').innerHTML = "Erreur de mise à jour.";
+                document.getElementById('display').innerHTML = "Erreur de chargement.";
             }
         }
-
         loadPrices();
         setInterval(loadPrices, 300000);
     </script>
