@@ -1,20 +1,23 @@
 name: Update Fuel Prices
 on:
   schedule:
-    - cron: '*/2 * * * *'
-  workflow_dispatch:
+    - cron: '*/5 * * * *' # S'exécute toutes les 5 minutes
+  workflow_dispatch: # Permet de le lancer à la main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Ajout explicite des permissions pour éviter les blocages
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9' # Correction ici: 'python-version' au lieu de 'python-code'
+          python-version: '3.9'
 
       - name: Install dependencies
         run: pip install requests
@@ -24,8 +27,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --global user.name 'PriceBot'
-          git config --global user.email 'bot@github.com'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add prix.json
-          git commit -m "Mise à jour des prix" || exit 0
+          git commit -m "Mise à jour automatique des prix" || exit 0
           git push
