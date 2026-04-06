@@ -2,8 +2,8 @@ import requests
 import json
 
 URL = "https://regieessencequebec.ca/stations.geojson.gz"
-TARGET_POSTAL_CODES = ["J1L 0C8", "J1L 2A4"]
-#TARGET_POSTAL_CODES = ["J1L 0C8", "J1L 2A4", "J0B 2P0", "J0E 2L0", "J0E 1E0", "J0C 1M0" ]
+#TARGET_POSTAL_CODES = ["J1L 0C8", "J1L 2A4"]
+TARGET_POSTAL_CODES = ["J1L 0C8", "J1L 2A4", "J0B 2P0", "J0E 2L0", "J0E 1E0", "J0C 1M0" ]
 
 def get_data():
     headers = {'User-Agent': 'Mozilla/5.0'}
