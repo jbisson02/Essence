@@ -39,8 +39,8 @@
 
                 // Affichage Stats
                 document.getElementById('stats-area').innerHTML = `
-                    <div class="stat-card"><b>MIN QC</b><br>${data.stats.min.prix}<br><small>${data.stats.min.nom}</small></div>
-                    <div class="stat-card"><b>MAX QC</b><br>${data.stats.max.prix}<br><small>${data.stats.max.nom}</small></div>
+                    <div class="stat-card"><b>MIN QC</b><br>${data.stats.min.prix}<br><small>${data.stats.min.nom}<br>${data.stats.min.adresse}</small></div>
+                    <div class="stat-card"><b>MAX QC</b><br>${data.stats.max.prix}<br><small>${data.stats.max.nom}<br>${data.stats.max.adresse}</small></div>
                 `;
 
                 // Affichage par Ville
