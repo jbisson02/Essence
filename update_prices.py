@@ -11,10 +11,10 @@ def get_data():
         response = requests.get(URL, headers=headers, timeout=30)
         data = response.json()
         
-        # Extraction de la date de génération du fichier (Metadata)
         file_date = data.get('metadata', {}).get('generated_at', 'Inconnue')
         
-        results = []
+        # Structure pour regrouper par ville
+        villes = {}
         min_station = None
         max_station = None
         min_price = float('inf')
@@ -25,42 +25,52 @@ def get_data():
         for feature in features:
             props = feature.get('properties', {})
             
-            current_price = None
+            # Extraction du prix
+            current_price_str = "N/A"
+            current_price_num = None
             for p in props.get('Prices', []):
                 if p.get('GasType') == 'Régulier' and p.get('IsAvailable'):
+                    current_price_str = p.get('Price')
                     try:
-                        current_price = float(p.get('Price').replace('¢', ''))
+                        current_price_num = float(current_price_str.replace('¢', ''))
                     except:
                         continue
             
-            if current_price is None:
+            if current_price_num is None:
                 continue
 
-            if current_price < min_price:
-                min_price = current_price
-                min_station = {"nom": f"{props.get('brand', '')} - {props.get('Name', '')}", "adresse": props.get('Address', ''), "prix": f"{current_price}¢"}
-            
-            if current_price > max_price:
-                max_price = current_price
-                max_station = {"nom": f"{props.get('brand', '')} - {props.get('Name', '')}", "adresse": props.get('Address', ''), "prix": f"{current_price}¢"}
+            # Stats provinciales
+            if current_price_num < min_price:
+                min_price = current_price_num
+                min_station = {"nom": f"{props.get('brand', '')} - {props.get('Name', '')}", "adresse": props.get('Address', ''), "prix": current_price_str}
+            if current_price_num > max_price:
+                max_price = current_price_num
+                max_station = {"nom": f"{props.get('brand', '')} - {props.get('Name', '')}", "adresse": props.get('Address', ''), "prix": current_price_str}
 
+            # Filtrage par Code Postal (Sherbrooke) ou tu peux décider d'inclure tout
             if props.get('PostalCode') in TARGET_POSTAL_CODES:
-                results.append({
+                # On extrait la ville de l'adresse (ex: "Rue, Ville")
+                full_address = props.get('Address', '')
+                ville = full_address.split(',')[-1].strip() if ',' in full_address else "Autres"
+                
+                if ville not in villes:
+                    villes[ville] = []
+                
+                villes[ville].append({
                     "nom": f"{props.get('brand', '')} - {props.get('Name', '')}",
-                    "adresse": props.get('Address', ''),
-                    "prix": f"{current_price}¢"
+                    "adresse": full_address,
+                    "prix": current_price_str
                 })
 
         final_data = {
             "file_generated_at": file_date,
-            "stations": results,
+            "villes": villes,
             "stats": {"min": min_station, "max": max_station}
         }
 
         with open("prix.json", "w", encoding="utf-8") as f:
             json.dump(final_data, f, indent=4, ensure_ascii=False)
             
-        print(f"Mise à jour réussie. Fichier généré le : {file_date}")
     except Exception as e:
         print(f"Erreur : {e}")
 
