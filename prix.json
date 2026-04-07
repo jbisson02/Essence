@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-07T22:55:02.8797074Z",
+    "file_generated_at": "2026-04-07T23:30:02.8196165Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -26,9 +26,9 @@
             "prix": "164.2¢"
         },
         "max": {
-            "nom": "Ultramar - 9400-4504 QUEBEC INC",
-            "adresse": "5600 Boul. Jean-XXIII, Trois-Rivières",
-            "prix": "258.9¢"
+            "nom": "Esso - Libre Service Fermont inc.",
+            "adresse": "401 rue Le Carrefour, Fermont",
+            "prix": "219.0¢"
         }
     }
 }
