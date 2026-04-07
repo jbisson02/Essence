@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-06T23:30:09.2596164Z",
+    "file_generated_at": "2026-04-07T00:00:10.2300539Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -26,9 +26,9 @@
             "prix": "164.2¢"
         },
         "max": {
-            "nom": "Esso - Libre Service Fermont inc.",
-            "adresse": "401 rue Le Carrefour, Fermont",
-            "prix": "219.0¢"
+            "nom": "Ultramar - 9501-2837 QUEBEC INC.",
+            "adresse": "491 boul. Arthur-Sauvé, SAINT-EUSTACHE",
+            "prix": "255.9¢"
         }
     }
 }
