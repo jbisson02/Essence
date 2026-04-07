@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-07T20:25:03.1735841Z",
+    "file_generated_at": "2026-04-07T21:20:03.1707282Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -15,7 +15,7 @@
             {
                 "nom": "Shell - Dépanneur Carrefour Portland inc.",
                 "adresse": "2880 boul. de Portland, Sherbrooke",
-                "prix": "196.9¢"
+                "prix": "199.9¢"
             }
         ]
     },
@@ -26,9 +26,9 @@
             "prix": "164.2¢"
         },
         "max": {
-            "nom": "Esso - Libre Service Fermont inc.",
-            "adresse": "401 rue Le Carrefour, Fermont",
-            "prix": "219.0¢"
+            "nom": "Ultramar - 9400-4504 QUEBEC INC",
+            "adresse": "5600 Boul. Jean-XXIII, Trois-Rivières",
+            "prix": "258.9¢"
         }
     }
 }
