@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-08T11:40:02.2745007Z",
+    "file_generated_at": "2026-04-08T12:45:02.4107656Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -26,9 +26,9 @@
             "prix": "164.2¢"
         },
         "max": {
-            "nom": "Esso - Libre Service Fermont inc.",
-            "adresse": "401 rue Le Carrefour, Fermont",
-            "prix": "219.0¢"
+            "nom": "Aucun - CONSEIL DES ATIKAMEKW DE MANAWAN",
+            "adresse": "120 rue Amisk, Manawan",
+            "prix": "239.0¢"
         }
     }
 }
