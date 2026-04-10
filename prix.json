@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-10T20:00:02.24573Z",
+    "file_generated_at": "2026-04-10T20:50:01.8945503Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -21,9 +21,9 @@
     },
     "stats": {
         "min": {
-            "nom": "Miraco - Garage Daniel Gosselin",
-            "adresse": "499 rue Principale, Saint-Sébastien",
-            "prix": "164.2¢"
+            "nom": "Esso - Esso Grenville",
+            "adresse": "54 rue Maple, Grenville",
+            "prix": "166.9¢"
         },
         "max": {
             "nom": "Pétro-Québec - Les Motels de l'Énergie inc.",
