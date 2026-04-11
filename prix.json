@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-11T18:55:02.2794017Z",
+    "file_generated_at": "2026-04-11T19:35:02.3265183Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -21,8 +21,8 @@
     },
     "stats": {
         "min": {
-            "nom": "Esso - Esso Grenville",
-            "adresse": "54 rue Maple, Grenville",
+            "nom": "Shell - 9363-3691 Quebec Inc",
+            "adresse": "130 rue Maple, Grenville",
             "prix": "166.9¢"
         },
         "max": {
