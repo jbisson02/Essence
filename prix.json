@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-13T15:55:02.0995951Z",
+    "file_generated_at": "2026-04-13T17:00:03.0028163Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -26,9 +26,9 @@
             "prix": "161.9¢"
         },
         "max": {
-            "nom": "Pétro-Québec - Les Motels de l'Énergie inc.",
-            "adresse": "Km 211 rte 389, Baie-Comeau",
-            "prix": "229.4¢"
+            "nom": "Esso - Distribution Radis-Nord inc.",
+            "adresse": "57 av des Groseillers, Gouvernement régional d’Eeyou Istchee",
+            "prix": "239.3¢"
         }
     }
 }
