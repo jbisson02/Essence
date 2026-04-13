@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-13T10:10:01.7098141Z",
+    "file_generated_at": "2026-04-13T11:40:02.3580052Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -21,9 +21,9 @@
     },
     "stats": {
         "min": {
-            "nom": "Shell - 9363-3691 Quebec Inc",
-            "adresse": "130 rue Maple, Grenville",
-            "prix": "166.9¢"
+            "nom": "Esso - Esso Grenville",
+            "adresse": "54 rue Maple, Grenville",
+            "prix": "161.9¢"
         },
         "max": {
             "nom": "Pétro-Québec - Les Motels de l'Énergie inc.",
