@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-16T11:55:02.4744422Z",
+    "file_generated_at": "2026-04-16T13:50:01.8824029Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -21,8 +21,8 @@
     },
     "stats": {
         "min": {
-            "nom": "Shell - 9363-3691 Quebec Inc",
-            "adresse": "130 rue Maple, Grenville",
+            "nom": "Petro-Canada - Filgo Grenville",
+            "adresse": "40 rue Maple, Grenville",
             "prix": "160.8¢"
         },
         "max": {
