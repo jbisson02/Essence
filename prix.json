@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-16T18:05:02.2530387Z",
+    "file_generated_at": "2026-04-16T19:35:02.2475604Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -21,9 +21,9 @@
     },
     "stats": {
         "min": {
-            "nom": "Petro-Canada - Filgo Grenville",
-            "adresse": "40 rue Maple, Grenville",
-            "prix": "160.8¢"
+            "nom": "Harnois - 9392-7804 Québec Inc.",
+            "adresse": "4095 rue de l'Église, Saint-Antoine-Abbé",
+            "prix": "168.9¢"
         },
         "max": {
             "nom": "Esso - Distribution Radis-Nord inc.",
