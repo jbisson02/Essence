@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-18T16:05:02.2200196Z",
+    "file_generated_at": "2026-04-18T16:55:02.057037Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -15,7 +15,7 @@
             {
                 "nom": "Shell - Dépanneur Carrefour Portland inc.",
                 "adresse": "2880 boul. de Portland, Sherbrooke",
-                "prix": "199.9¢"
+                "prix": "196.9¢"
             }
         ]
     },
