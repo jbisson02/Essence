@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-18T11:55:01.8114199Z",
+    "file_generated_at": "2026-04-18T13:00:02.6070448Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -21,9 +21,9 @@
     },
     "stats": {
         "min": {
-            "nom": "Petro-Canada - Filgo Grenville",
-            "adresse": "40 rue Maple, Grenville",
-            "prix": "168.9¢"
+            "nom": "Esso - Esso Grenville",
+            "adresse": "54 rue Maple, Grenville",
+            "prix": "163.9¢"
         },
         "max": {
             "nom": "Esso - Distribution Radis-Nord inc.",
