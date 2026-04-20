@@ -1,16 +1,16 @@
 {
-    "file_generated_at": "2026-04-20T02:10:02.5529599Z",
+    "file_generated_at": "2026-04-20T05:35:02.3342968Z",
     "villes": {
         "Sherbrooke": [
             {
                 "nom": "Costco - Costco Sherbrooke",
                 "adresse": "3800 boul. Monseigneur-Fortier, Sherbrooke",
-                "prix": "187.9¢"
+                "prix": "182.9¢"
             },
             {
                 "nom": "Esso - Couche-Tard #1282",
                 "adresse": "2900 boul. Portland, Sherbrooke",
-                "prix": "196.9¢"
+                "prix": "188.9¢"
             },
             {
                 "nom": "Shell - Dépanneur Carrefour Portland inc.",
@@ -21,9 +21,9 @@
     },
     "stats": {
         "min": {
-            "nom": "Pétroles Maurice - 2964-3723 quebec inc",
-            "adresse": "223 boul. Saint-Luc, Saint-Jean-sur-Richelieu",
-            "prix": "157.9¢"
+            "nom": "Petro-Canada - Filgo Grenville",
+            "adresse": "40 rue Maple, Grenville",
+            "prix": "148.4¢"
         },
         "max": {
             "nom": "Esso - Distribution Radis-Nord inc.",
