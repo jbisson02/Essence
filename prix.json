@@ -1,5 +1,5 @@
 {
-    "file_generated_at": "2026-04-19T23:30:02.6384052Z",
+    "file_generated_at": "2026-04-20T02:10:02.5529599Z",
     "villes": {
         "Sherbrooke": [
             {
@@ -21,9 +21,9 @@
     },
     "stats": {
         "min": {
-            "nom": "Esso - Esso Grenville",
-            "adresse": "54 rue Maple, Grenville",
-            "prix": "159.9¢"
+            "nom": "Pétroles Maurice - 2964-3723 quebec inc",
+            "adresse": "223 boul. Saint-Luc, Saint-Jean-sur-Richelieu",
+            "prix": "157.9¢"
         },
         "max": {
             "nom": "Esso - Distribution Radis-Nord inc.",
